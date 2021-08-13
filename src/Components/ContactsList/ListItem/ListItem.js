@@ -1,13 +1,9 @@
 import { connect } from "react-redux";
-import { deleteContact } from '../../../redux/actions';
+import { deleteContact } from '../../../redux/contacts/contacts-actions';
 import PropTypes from "prop-types";
 import styles from "./styles.module.css";
 
-function ListItem({ contacts, deleteContact, filter }) {
-    const filtredContacts = contacts.filter((item) =>
-    item.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
+function ListItem({ filtredContacts, deleteContact }) { 
   return filtredContacts.map((item) => (
     <li className={styles.listItem} key={item.id}>
       <p className={styles.itemText}>
@@ -25,8 +21,13 @@ function ListItem({ contacts, deleteContact, filter }) {
 };
 
 const mapStateToProps = (state) => {
-  return state.phonebook
+  const { contacts, filter } = state;
+  const filtredContacts = contacts.filter((item) =>
+    item.name.toLowerCase().includes(filter.toLowerCase()));
+
+  return {filtredContacts};
 };
+  
 
 const mapDispatchToProps = (dispatch) => ({
   deleteContact: (id) => dispatch(deleteContact(id))

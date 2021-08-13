@@ -17,6 +17,6 @@ function App() {
   );
 };
 
-export default connect()(App);
+export default connect(null)(App);
 
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { addContact } from '../../redux/actions';
+import { addContact } from '../../redux/contacts/contacts-actions';
 
 import shortid from "shortid";
 import PropTypes from "prop-types";
@@ -29,13 +29,13 @@ function Form({ newContact, contacts }) {
   const submitHanlder = (evt) => {
     evt.preventDefault();
     const namesToLowerCase = contacts.map((item) => item.name.toLowerCase());
-
+// проверка на повторение имени
     if (namesToLowerCase.find((item) => item === name.toLowerCase())) {
       alert("please change name");
       setName('');
-        return 
+      return 
     };
-    
+// создзание нового контакта
     const contact = {
     id: shortid.generate(),
     name: name,
@@ -90,9 +90,9 @@ function Form({ newContact, contacts }) {
   );
 };
 
-const mapStateToProps = (state) => {
-  return state.phonebook
-};
+const mapStateToProps = (state) => ({
+  contacts: state.contacts
+})
 
 const mapDispatchToProps = (dispatch) => ({
   newContact: (data) => dispatch(addContact(data))

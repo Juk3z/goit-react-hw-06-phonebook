@@ -1,15 +1,11 @@
 import { connect } from "react-redux";
-import { changeFilter } from '../../redux/actions';
+import { changeFilter } from '../../redux/filter/filter-actions';
 import shortid from "shortid";
 import PropTypes from "prop-types";
 import styles from "./styles.module.css";
 
-function Filter({ filter, changeFilter }) {
-  console.log(filter)
-  function changeHandler(evt) {
-    changeFilter(evt.target.value)
-  }
-
+function Filter({ filterValue, changeFilter }) {
+  
   const inputId = shortid.generate();
   return (
     <label className={styles.filterLabel} htmlFor={inputId}>
@@ -18,23 +14,23 @@ function Filter({ filter, changeFilter }) {
         id={inputId}
         type="text"
         name="filter"
-        value={filter}
-        onChange={changeHandler}
+        value={filterValue}
+        onChange={(e) => changeFilter(e.target.value)}
       />
     </label>
   );
 }
 
-const mapStateToProps = (state) => {
-  return state.phonebook
-};
+const mapStateToProps = (state) => ({
+  filterValue: state.filter
+})
 
 const mapDispatchToProps = (dispatch) => ({
   changeFilter: (value) => dispatch(changeFilter(value))
 });
 
 Filter.defaultProps = {
-  value: "",
+  filterValue: "",
 };
 
 Filter.propTypes = {

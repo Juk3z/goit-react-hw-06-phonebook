@@ -1,10 +1,12 @@
-// const filterReducer = (state = '', { type, payload }) => {
-//     switch (type) {     
-//         case 'filter/change':
-//             return { ...state, filter: payload }
-        
-//         default: return state;
-//     }
-// };
+import types from './filter-types';
 
-// filterReducer()
+const filterReducer = (state = '', { type, payload }) => {
+    switch (type) {     
+        case types.change:
+            return payload;
+        
+        default: return state;
+    }
+};
+
+export default filterReducer;
