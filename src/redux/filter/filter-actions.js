@@ -1,6 +1,3 @@
-import types from './filter-types';
+import { createAction } from '@reduxjs/toolkit';
 
-export const changeFilter = (value) => ({
-    type: types.change,
-    payload: value
-});
+export const changeFilter = createAction('filter/change');

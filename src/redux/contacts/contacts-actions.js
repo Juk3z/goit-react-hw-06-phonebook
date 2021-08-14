@@ -1,15 +1,11 @@
-import types from './contacts-types';
+import { createAction } from '@reduxjs/toolkit';
 
-export const addContact = (contact) => ({
-    type: types.add,
+export const addContact = createAction('contacts/add', (contact) => ({
     payload: {
         id: contact.id,
         name: contact.name,
         number: contact.number
-        }
-});
-    
-export const deleteContact = (id) => ({
-    type: types.delete,
-    payload: id
-});
+    }
+}));
+
+export const deleteContact = createAction('contacts/delete');

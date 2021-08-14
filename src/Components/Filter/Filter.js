@@ -1,10 +1,14 @@
-import { connect } from "react-redux";
+// import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 import { changeFilter } from '../../redux/filter/filter-actions';
+import { getFilter } from "../../redux/filter/filter-selector";
+
 import shortid from "shortid";
-import PropTypes from "prop-types";
 import styles from "./styles.module.css";
 
-function Filter({ filterValue, changeFilter }) {
+function Filter() {
+  const filterValue = useSelector(getFilter);
+  const dispatch = useDispatch();
   
   const inputId = shortid.generate();
   return (
@@ -15,27 +19,19 @@ function Filter({ filterValue, changeFilter }) {
         type="text"
         name="filter"
         value={filterValue}
-        onChange={(e) => changeFilter(e.target.value)}
+        onChange={(e) => dispatch(changeFilter(e.target.value))}
       />
     </label>
   );
 }
 
-const mapStateToProps = (state) => ({
-  filterValue: state.filter
-})
+// Filter.defaultProps = {
+//   filterValue: "",
+// };
 
-const mapDispatchToProps = (dispatch) => ({
-  changeFilter: (value) => dispatch(changeFilter(value))
-});
+// Filter.propTypes = {
+//   changeFilter: PropTypes.func.isRequired,
+//   filter: PropTypes.string,
+// };
 
-Filter.defaultProps = {
-  filterValue: "",
-};
-
-Filter.propTypes = {
-  changeFilter: PropTypes.func.isRequired,
-  filter: PropTypes.string,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default Filter;
