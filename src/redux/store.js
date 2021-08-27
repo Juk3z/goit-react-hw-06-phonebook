@@ -1,6 +1,6 @@
 import contactsReducer from './contacts/contacts-reducers';
 import filterReducer from './filter/filter-reducers';
-import { configureStore, getDefaultMiddleware, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
 import {
@@ -20,9 +20,9 @@ const persistConfig = {
     blacklist: ['filter'],
 };
 
-const middleware = [...getDefaultMiddleware({serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-    }}), logger];
+// const middleware = [...getDefaultMiddleware({serializableCheck: {
+//       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+//     }}), logger];
 
 
 const mainReducer = combineReducers({
@@ -34,7 +34,9 @@ const persistedReducer = persistReducer(persistConfig, mainReducer);
 
 const store = configureStore({
     reducer: persistedReducer,
-    middleware,
+    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(
+        { serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] } }
+    ), logger],
     devTools: process.env.NODE_ENV !== 'production',
 });
 
